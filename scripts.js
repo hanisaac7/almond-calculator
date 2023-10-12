@@ -1,3 +1,8 @@
+let num1 = null
+let num2 = null
+let operator = null
+let equalNumber = null
+
 //operations have been tested
 function add(num1, num2) {
     return num1 + num2
@@ -49,58 +54,60 @@ const operatorButton = document.querySelectorAll(".sign")
 const clearButton = document.querySelector(".clear")
 const equalButton = document.querySelector(".equals")
 
-let num1 = null
-let num2 = null
-let operator = null
-
 //function to display the button value 
 function displayButton(button) {
-    if (isNaN(operatorButton) == true) {
-      result = button.target.innerHTML
-      display.value += result
-    } else {
-      result = parseFloat(numberButton.target.innerHTML)
-      display.value += result
-    }
+  result = button.target.innerHTML
+  display.value += result
+}
+
+function displayResult() {
+  display.value = equalNumber
+  num1 = equalNumber
+  num2 = null
+  operator = null 
+}
+
+function reset() {
+  num1 = null
+  num2 = null
+  operator = null
 }
 
 function operatorAssignment(button) {
-  if (isNaN(operatorButton) == true) {
-    operator = button.target.innerHTML
-  }
+  operator = button.target.innerHTML
   console.log(num1 + operator + num2)
 }
 
 function numberAssignment(button) {
   const clickedNumber = button.target.innerHTML
+  if (equalNumber != null) {
+    restart(button)
+  }
   if (num1 == null) {
     num1 = clickedNumber
-  } else if (num1 != null && operator == null) {
+  } else if (num1 != null  && operator == null) {
     num1 += clickedNumber
   } else if (num1 != null && operator != null && num2 == null) {
     num2 = clickedNumber
   } else if (num1 != null && operator != null && num2 != null) {
     num2 += clickedNumber
-  }
-
-  console.log(num1 + operator + num2)
+  } 
+  console.log(num1 + operator + num2) 
 }
 
 //will empty text field when clear button is pressed
 clearButton.addEventListener("click", () => {
   result = ''
   display.value = result
-  
-  num1 = null
-  num2 = null
-  operator = null
-  console.log(result)
+  reset()
 })
+
 
 //will be ran when a number is pressed
 numberButton.forEach(function(button) {
   button.addEventListener("click", displayButton)
   button.addEventListener("click", numberAssignment)
+  button.addEventListener("click", restart)
 })
 
 //will be ran when a operator is pressed
@@ -114,13 +121,15 @@ equalButton.addEventListener("click", () => {
   num1 = parseFloat(num1)
   num2 = parseFloat(num2)
   operate()
-  display.value = equalNumber
-
-  num1 = null
-  num2 = null
-  operator = null 
-  
+  displayResult()
 })
 
-
-
+function restart(button) {
+  const clickedNumber = button.target.innerHTML
+  if (num1 == equalNumber && operator == null && num2 == null) { 
+    result = clickedNumber
+    display.value = ''
+    display.value = result
+   reset()
+  }
+}
