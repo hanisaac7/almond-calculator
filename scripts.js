@@ -5,23 +5,24 @@ let equalNumber = null
 
 //operations have been tested
 function add(num1, num2) {
-    return num1 + num2
-  }
+  return num1 + num2
+}
   
 function subtract (num1, num2) {
-    return num1 - num2
-  }
+  return num1 - num2
+}
   
 function multiply (num1, num2) {
-    return num1 * num2
-  }
+  return num1 * num2
+}
   
 function divide(num1, num2) {
-    return num1 / num2
+  if (num2 == 0) {
+    return "Error"
   }
-  
+  return num1 / num2
+}
 
-  
 //operate function has been tested
 function operate() {
   switch(operator) {
@@ -47,12 +48,40 @@ function operate() {
   }
 }  
 
-  
 const display = document.getElementById("display")
 const numberButton = document.querySelectorAll(".digits")
 const operatorButton = document.querySelectorAll(".sign")
 const clearButton = document.querySelector(".clear")
 const equalButton = document.querySelector(".equals")
+
+//will be ran when a number is pressed
+numberButton.forEach(function(button) {
+  button.addEventListener("click", displayButton)
+  button.addEventListener("click", numberAssignment)
+  button.addEventListener("click", restart)
+})
+
+//will be ran when a operator is pressed
+operatorButton.forEach(function(button) {
+  button.addEventListener("click", displayButton)
+  button.addEventListener("click", operateDisplay)
+  button.addEventListener("click", operatorAssignment)
+})
+
+//will empty text field when clear button is pressed
+clearButton.addEventListener("click", () => {
+  result = ''
+  display.value = result
+  reset()
+})
+
+//will run the operate function
+equalButton.addEventListener("click", () => {
+  num1 = parseFloat(num1)
+  num2 = parseFloat(num2)
+  operate()
+  displayResult()
+})
 
 //function to display the button value 
 function displayButton(button) {
@@ -61,6 +90,10 @@ function displayButton(button) {
 }
 
 function displayResult() {
+  if (isNaN(equalNumber)) {
+    equalNumber = "Error"
+    num1 = ''
+  }
   display.value = equalNumber
   num1 = equalNumber
   num2 = null
@@ -95,41 +128,20 @@ function numberAssignment(button) {
   console.log(num1 + operator + num2) 
 }
 
-//will empty text field when clear button is pressed
-clearButton.addEventListener("click", () => {
-  result = ''
-  display.value = result
-  reset()
-})
-
-
-//will be ran when a number is pressed
-numberButton.forEach(function(button) {
-  button.addEventListener("click", displayButton)
-  button.addEventListener("click", numberAssignment)
-  button.addEventListener("click", restart)
-})
-
-//will be ran when a operator is pressed
-operatorButton.forEach(function(button) {
-  button.addEventListener("click", displayButton)
-  button.addEventListener("click", operatorAssignment)
-})
-
-//will run the operate function
-equalButton.addEventListener("click", () => {
-  num1 = parseFloat(num1)
-  num2 = parseFloat(num2)
-  operate()
-  displayResult()
-})
-
 function restart(button) {
   const clickedNumber = button.target.innerHTML
   if (num1 == equalNumber && operator == null && num2 == null) { 
     result = clickedNumber
-    display.value = ''
     display.value = result
-   reset()
+    reset()
+  }
+}
+
+function operateDisplay () {
+  if (operator != null) {
+    operator = button.target.innerHTML
+    display.value = operator
+    currentDisplay = display.value
+    
   }
 }
