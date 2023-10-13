@@ -64,7 +64,7 @@ numberButton.forEach(function(button) {
 //will be ran when a operator is pressed
 operatorButton.forEach(function(button) {
   button.addEventListener("click", displayButton)
-  button.addEventListener("click", operateDisplay)
+  button.addEventListener("click", operatorDisplay)
   button.addEventListener("click", operatorAssignment)
 })
 
@@ -113,18 +113,23 @@ function operatorAssignment(button) {
 
 function numberAssignment(button) {
   const clickedNumber = button.target.innerHTML
+  if (num1 == null && operator == "-") {
+    num2 = ''
+    num1 += -Math.abs(clickedNumber)
+    operator = null
+  } 
   if (equalNumber != null) {
     restart(button)
   }
   if (num1 == null) {
     num1 = clickedNumber
-  } else if (num1 != null  && operator == null) {
+  } else if (num1 != null && operator == null && num2 == null) {
     num1 += clickedNumber
   } else if (num1 != null && operator != null && num2 == null) {
     num2 = clickedNumber
   } else if (num1 != null && operator != null && num2 != null) {
     num2 += clickedNumber
-  } 
+  }
   console.log(num1 + operator + num2) 
 }
 
@@ -137,10 +142,10 @@ function restart(button) {
   }
 }
 
-function operateDisplay (button) {
+function operatorDisplay (button) {
   if (operator != null) {
-    display.value = num1
     newDisplay = button.target.innerHTML
+    display.value = num1
     display.value = num1 + newDisplay
   }
 }
