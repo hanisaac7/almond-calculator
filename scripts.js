@@ -137,11 +137,10 @@ function restart(button) {
   }
 }
 
-function operateDisplay () {
+function operateDisplay (button) {
   if (operator != null) {
-    operator = button.target.innerHTML
-    display.value = operator
-    currentDisplay = display.value
-    
+    display.value = num1
+    newDisplay = button.target.innerHTML
+    display.value = num1 + newDisplay
   }
 }
