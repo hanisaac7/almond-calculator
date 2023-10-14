@@ -53,6 +53,7 @@ const numberButton = document.querySelectorAll(".digits")
 const operatorButton = document.querySelectorAll(".sign")
 const clearButton = document.querySelector(".clear")
 const equalButton = document.querySelector(".equals")
+const negativeButton = document.querySelector(".negative")
 
 //will be ran when a number is pressed
 numberButton.forEach(function(button) {
@@ -77,10 +78,19 @@ clearButton.addEventListener("click", () => {
 
 //will run the operate function
 equalButton.addEventListener("click", () => {
+  if (num1 != null && operator == null && num2 == null) {
+    operator = "+"
+    num2 = 0
+  } 
   num1 = parseFloat(num1)
   num2 = parseFloat(num2)
   operate()
   displayResult()
+})
+
+negativeButton.addEventListener("click", () => {
+  num1 = "-"
+  display.value = "-"
 })
 
 //function to display the button value 
@@ -92,7 +102,7 @@ function displayButton(button) {
 function displayResult() {
   if (isNaN(equalNumber)) {
     equalNumber = "Error"
-    num1 = ''
+    reset()
   }
   display.value = equalNumber
   num1 = equalNumber
@@ -108,27 +118,29 @@ function reset() {
 
 function operatorAssignment(button) {
   operator = button.target.innerHTML
+  if (num1 == null && operator != null && num2 == null) {
+    equalNumber = NaN
+    displayResult()
+  }
   console.log(num1 + operator + num2)
 }
 
 function numberAssignment(button) {
   const clickedNumber = button.target.innerHTML
-  if (num1 == null && operator == "-") {
-    num2 = ''
-    num1 += -Math.abs(clickedNumber)
-    operator = null
-  } 
   if (equalNumber != null) {
     restart(button)
   }
   if (num1 == null) {
     num1 = clickedNumber
-  } else if (num1 != null && operator == null && num2 == null) {
+  } else if (num1 != null && operator == null && num2 === null) {
     num1 += clickedNumber
   } else if (num1 != null && operator != null && num2 == null) {
     num2 = clickedNumber
   } else if (num1 != null && operator != null && num2 != null) {
     num2 += clickedNumber
+  } else if (num1 == null && operator != null && num2 == null) {
+    display.value = "Error"
+    reset()
   }
   console.log(num1 + operator + num2) 
 }
@@ -136,6 +148,10 @@ function numberAssignment(button) {
 function restart(button) {
   const clickedNumber = button.target.innerHTML
   if (num1 == equalNumber && operator == null && num2 == null) { 
+    result = clickedNumber
+    display.value = result
+    reset()
+  } else if (num1 == null && operator == "Error" && num2 == null) {
     result = clickedNumber
     display.value = result
     reset()
