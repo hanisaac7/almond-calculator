@@ -15,6 +15,7 @@ Almond Calculator is a simple and elegant calculator application with a soothing
 ## Screenshots
 
 ![Screenshot 1](screenshot.png)
+![Screenshot 2](screenshot2.png)
 
 ## Getting Started
 
