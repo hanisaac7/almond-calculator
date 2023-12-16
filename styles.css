@@ -109,3 +109,11 @@ button:hover {
 .clear:hover {
     color: #996633
 }
+
+.mine {
+    color: white;
+    margin-top: 40px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 350;
+}
