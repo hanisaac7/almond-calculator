@@ -110,6 +110,14 @@ button:hover {
     color: #996633
 }
 
+input:focus {
+    outline: none;
+}
+
+input:hover {
+    cursor: default;
+}
+
 .mine {
     color: white;
     margin-top: 40px;
